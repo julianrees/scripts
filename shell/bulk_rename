@@ -1,0 +1,32 @@
+#!/bin/bash
+if [ "$#" -gt 3 ]; then
+  echo "ERROR: Too many arguments! usage: bulk_rename oldfilefrag newfilefrag fileextention (optional, * is default)"
+  exit 1
+fi
+if [ "$#" == 3 ]; then
+  EXT=$3
+  NEWSTEM=$2
+  OLDSTEM=$1
+elif [ "$#" == 2 ]; then
+  EXT="*"
+  NEWSTEM=$2
+  OLDSTEM=$1
+else
+  echo "ERROR: Provide a filename fragment! usage: bulk_rename oldfilefrag newfilefrag fileextention (optional, * is default)"
+  exit 1
+fi
+NFILES=$(ls *$OLDSTEM*.$EXT | wc -l)
+if [ $NFILES -eq 0 ]; then
+  echo "there are no files to merge!"
+  exit 1
+fi
+ls *$OLDSTEM*.$EXT > files.tmp
+for fname in $(cat files.tmp)
+do
+  #echo $fname
+  NEWNAME=$(echo $fname | sed -e 's/'"$OLDSTEM"'/'"$NEWSTEM"'/')
+  #echo $NEWNAME
+  #echo " "
+  mv -v $fname $NEWNAME
+done
+rm -f files.tmp
