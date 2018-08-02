@@ -9,6 +9,7 @@ install.packages("readr")
 install.packages("readxl")
 install.packages("fitdistrplus")
 install.packages("devtools")
+install.packages("clusterSim")
 devtools::install_github("ropensci/plotly")
 install.packages("clusterSim")
 
