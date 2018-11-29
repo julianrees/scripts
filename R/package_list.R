@@ -1,5 +1,6 @@
 install.packages("ggplot2")
 install.packages("plyr")
+install.packages("knitr")
 install.packages("superheat")
 install.packages("reshape2")
 install.packages("xlsx")
@@ -11,6 +12,11 @@ install.packages("fitdistrplus")
 install.packages("devtools")
 devtools::install_github("ropensci/plotly")
 install.packages("clusterSim")
+install.packages("tinytex")
+install.packages("quantmod")
+install.packages("lubridate")
+install.packages("magrittr")
+
 
 source("https://bioconductor.org/biocLite.R")
 biocLite()
