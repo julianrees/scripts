@@ -17,6 +17,7 @@ install.packages("tinytex")
 install.packages("quantmod")
 install.packages("lubridate")
 install.packages("magrittr")
+install.packages("likert")
 
 
 source("https://bioconductor.org/biocLite.R")

@@ -1,0 +1,60 @@
+#!/bin/bash
+# JAR Jan 29, 2019 - this script searches the current directory and subdirectories for a list of text strings
+# contained in the input file, and concatenates the target files into a single file
+
+mkdir ../ttrasyhaiwktemp
+if [ "$#" -lt 1 ]; then
+  echo "ERROR: Not enough arguments! usage: concat_files.sh list of search terms"
+  exit 1
+fi
+INFILE=$1
+
+clear
+
+for strings in $(cat $INFILE)
+do
+  #echo $strings
+  find -E . -regex ".*$strings.*" -exec cp {} ../ttrasyhaiwktemp/ \;
+done
+
+echo " "
+echo "Thanks for merging your files with concat_file :)"
+echo " "
+echo "The first 15 lines of the first file are printed:"
+echo " "
+head ../ttrasyhaiwktemp/$(ls ../ttrasyhaiwktemp | head -n 1 )
+echo " "
+echo "Please enter the number of header lines to be skipped"
+echo "from all but the first file: NOTE your files should all"
+echo "have the same header length, and the data should be rectangular!!"
+echo " "
+read skiplines
+
+echo "You have chosen to merge the following files:"
+echo " "
+ls ../ttrasyhaiwktemp
+echo " "
+echo "Do you wish to proceed? (Y/N)"
+read proceed
+
+if [ "$proceed" != "Y" ]; then
+  echo " "
+  echo "OK bye!"
+  echo " "
+  exit 1
+fi
+echo " "
+echo "Awesome :)  Please enter your desired filename with extention:"
+read newname
+
+head -n $skiplines ../ttrasyhaiwktemp/$(ls ../ttrasyhaiwktemp | head -n 1) > $newname
+
+for fname in $(ls ../ttrasyhaiwktemp)
+do
+  tail -n +$((1+$skiplines)) ../ttrasyhaiwktemp/$fname >> $newname
+done
+
+
+echo "Hurray! Your files have been merged!"
+rm -r ../ttrasyhaiwktemp
+exit 1
